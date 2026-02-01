@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'medikost-cms.test',
+        hostname: 'cms.mediko.id',
       },
     ],
   },
