@@ -1,6 +1,6 @@
 // API configuration
 const isProduction = process.env.NODE_ENV === 'production';
-export const API_BASE_URL = 'https://cms.mediko.id/api/v1/';
+export const API_BASE_URL = 'https://cms.medikost.id/api/v1/';
 
 export const apiFetch = async (endpoint: string, options?: RequestInit) => {
   const url = `${API_BASE_URL}${endpoint}`;
