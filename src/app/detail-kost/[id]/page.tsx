@@ -323,14 +323,18 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
               {product.facilities.map((facility, index) => (
                 <div key={index} className="bg-white border rounded-lg p-3">
                   <h3 className="text-sm font-medium mb-2 text-gray-700">{facility.header}</h3>
-                  <ul className="space-y-1">
-                    {facility.items.map((item, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-sm text-gray-600">
-                        {getIcon(item)}
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {facility.items.length > 0 ? (
+                    <ul className="space-y-1">
+                      {facility.items.map((item, idx) => (
+                        <li key={idx} className="flex items-center gap-2 text-sm text-gray-600">
+                          {getIcon(item)}
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-gray-500">Tidak ada aturan</p>
+                  )}
                 </div>
               ))}
             </div>
