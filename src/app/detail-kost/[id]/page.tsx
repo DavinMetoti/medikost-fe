@@ -3,8 +3,12 @@
 import { getProductById, ApiResponse, ProductDetail } from '../../../services/product/product.service';
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Wifi, Car, Camera, Home, Users, Shield, Clock, FileText, Bike, Snowflake, Bed, Armchair, Table, Shirt, Fan, ChefHat, Utensils, Archive, Droplets, Wind, CheckCircle, Ban, Toilet } from 'lucide-react';
+
+// Dynamic import for MapComponent to avoid SSR issues
+const MapComponent = dynamic(() => import('./MapComponent'), { ssr: false });
 
 interface DetailKostPageProps {
   params: Promise<{
@@ -325,35 +329,10 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
             })()}
 
             {/* Map Preview */}
-            {product.google_maps_link && (
-              <div className="mb-4 mt-6">
-                <h2 className="text-lg font-semibold mb-3 text-gray-800">Lokasi</h2>
-                <a
-                  href={product.google_maps_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full h-64 rounded-lg overflow-hidden border hover:shadow-lg transition-shadow duration-300"
-                >
-                  <div className="w-full h-full bg-gray-100 flex items-center justify-center relative">
-                    <div className="text-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-map-pin mx-auto mb-2 text-gray-400">
-                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
-                      </svg>
-                      <p className="text-gray-600 font-medium">Lihat di Google Maps</p>
-                      <p className="text-sm text-gray-500">Klik untuk membuka peta</p>
-                    </div>
-                    <div className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-md">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-external-link text-gray-600">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                        <polyline points="15,3 21,3 21,9"></polyline>
-                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                      </svg>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            )}
+            <div className="mb-4 mt-6">
+              <h2 className="text-lg font-semibold mb-3 text-gray-800">Lokasi</h2>
+              <MapComponent product={product} />
+            </div>
           </div>
 
           {/* Facilities */}

@@ -20,6 +20,8 @@ export interface ProductDetail {
   distance_to_kariadi: string;
   whatsapp: string;
   google_maps_link: string;
+  latitude: string;
+  longitude: string;
   facilities: Array<{
     header: string;
     items: string[];
