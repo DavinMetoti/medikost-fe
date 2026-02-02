@@ -194,7 +194,7 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
             <img
               src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://cms.medikost.id'}/storage/products/${product.images[selectedImage]}`}
               alt={`${product.name} main`}
-              className="w-full h-80 md:h-120 object-cover rounded-lg border"
+              className="w-full h-64 sm:h-80 md:h-96 object-cover rounded-lg border"
             />
           </div>
           {/* Thumbnail Strip */}
@@ -214,7 +214,7 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
         </div>
 
         {/* Description and Facilities */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 mb-6">
           {/* Description */}
           <div className="md:col-span-8">
             <div className="">
@@ -228,7 +228,7 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                 <div className="flex items-center gap-2">
                     <h2 className="text-lg font-semibold mb-3 text-gray-800">Daftar Kamar</h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   {product.product_details.map((detail, index) => (
                     <div key={index} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
                       {/* Image Section */}
@@ -240,8 +240,8 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                             className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-500"
                           />
                           {/* Status Badge Overlay */}
-                          <div className="absolute top-3 right-3">
-                            <div className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold shadow-lg ${
+                          <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
+                            <div className={`inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs font-bold shadow-lg ${
                               detail.status === 'habis' || detail.available_rooms === 0
                                 ? 'bg-red-500 text-white'
                                 : 'bg-emerald-500 text-white'
@@ -250,16 +250,16 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                             </div>
                           </div>
                           {/* Available Rooms Badge */}
-                          <div className="absolute top-3 left-3">
-                            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium shadow-lg">
-                              <Users className="w-4 h-4" />
+                          <div className="absolute top-2 left-2 sm:top-3 sm:left-3">
+                            <div className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium shadow-lg">
+                              <Users className="w-3 h-3 sm:w-4 sm:h-4" />
                               {detail.available_rooms} Kamar
                             </div>
                           </div>
                         </div>
                       )}
 
-                      <div className="p-6">
+                      <div className="p-4 sm:p-6">
                         {/* Room Name */}
                         <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors duration-300">
                           {detail.room_name}
