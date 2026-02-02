@@ -40,7 +40,7 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
 
   const getImageUrl = (thumbnail: string) => {
     if (thumbnail.startsWith('/storage/')) {
-      return `https://medikost-cms.test${thumbnail}`;
+      return `https://cms.medikost$.id/${thumbnail}`;
     }
     return thumbnail;
   };
