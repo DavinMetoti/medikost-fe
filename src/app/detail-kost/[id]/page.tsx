@@ -276,9 +276,43 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
               <div className="text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: product.description }} />
             </div>
 
+            {/* Peraturan dan Ketentuan Kost */}
+            {product.facilities && product.facilities.find(f => f.header === "Peraturan Kost") && (
+              <div className="mt-6">
+                <h2 className="text-lg font-semibold mb-3 text-gray-800">Peraturan dan Ketentuan Kost</h2>
+                <div className="bg-white border rounded-lg p-4">
+                  <ul className="space-y-2">
+                    {product.facilities.find(f => f.header === "Peraturan Kost")?.items.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                        <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+            
+            {/* Peraturan dan Ketentuan Kost */}
+            {product.facilities && product.facilities.find(f => f.header === "Ketentuan pengajuan sewa") && (
+              <div className="mt-6">
+                <h2 className="text-lg font-semibold mb-3 text-gray-800">Peraturan dan Ketentuan Kost</h2>
+                <div className="bg-white border rounded-lg p-4">
+                  <ul className="space-y-2">
+                    {product.facilities.find(f => f.header === "Ketentuan pengajuan sewa")?.items.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                        <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+
             {/* Map Preview */}
             {product.google_maps_link && (
-              <div className="mb-6">
+              <div className="mb-4 mt-6">
                 <h2 className="text-lg font-semibold mb-3 text-gray-800">Lokasi</h2>
                 <a
                   href={product.google_maps_link}
@@ -306,102 +340,6 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                 </a>
               </div>
             )}
-
-            {/* Detail Kamar */}
-            {product.product_details && product.product_details.length > 0 && (
-              <div className="mt-6">
-                <div className="flex items-center gap-2">
-                    <h2 className="text-lg font-semibold mb-3 text-gray-800">Daftar Kamar</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                  {product.product_details.map((detail, index) => (
-                    <div key={index} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden flex flex-col">
-                      {/* Image Section */}
-                      {detail.images && detail.images.length > 0 && (
-                        <div className="relative overflow-hidden">
-                          <img
-                            src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://cms.medikost.id'}/storage/product-details/${detail.images[0]}`}
-                            alt={`${detail.room_name}`}
-                            className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
-                          {/* Status Badge Overlay */}
-                          <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
-                            <div className={`inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs font-bold shadow-lg ${
-                              detail.status === 'habis' || detail.available_rooms === 0
-                                ? 'bg-red-500 text-white'
-                                : 'bg-emerald-500 text-white'
-                            }`}>
-                              {detail.status === 'habis' || detail.available_rooms === 0 ? 'HABIS' : 'TERSEDIA'}
-                            </div>
-                          </div>
-                          {/* Available Rooms Badge */}
-                          <div className="absolute top-2 left-2 sm:top-3 sm:left-3">
-                            <div className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium shadow-lg">
-                              <Users className="w-3 h-3 sm:w-4 sm:h-4" />
-                              {detail.available_rooms} Kamar
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="p-4 sm:p-6 flex flex-col flex-1">
-                        <div className="flex-1">
-                          {/* Room Name */}
-                          <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors duration-300">
-                            {detail.room_name}
-                          </h3>
-
-                          {/* Facilities */}
-                          {detail.facilities && detail.facilities.filter((facility: { header: string; items: string[] }) => facility.items.length > 0).flatMap((facility: { header: string; items: string[] }) => facility.items).slice(0, 3).length > 0 && (
-                            <div className="mt-2 mb-4">
-                              <div className="flex flex-wrap gap-2">
-                                {detail.facilities
-                                  .filter((facility: { header: string; items: string[] }) => facility.items.length > 0)
-                                  .flatMap((facility: { header: string; items: string[] }) => facility.items)
-                                  .slice(0, 3)
-                                  .map((item: string, i: number) => (
-                                    <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded-md text-xs text-gray-600">
-                                      {getIcon(item)}
-                                      <span>{item}</span>
-                                    </div>
-                                  ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Price Section */}
-                          <div className="mb-4">
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <p className="text-xs text-gray-600 mb-1 font-medium">Harga per bulan</p>
-                                <p className="text-2xl font-bold text-emerald-600">
-                                  Rp {parseInt(detail.price).toLocaleString('id-ID')}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Description */}
-                          <div className="text-sm text-gray-600 leading-relaxed">
-                            {truncateText(stripHtml(detail.description), 120)}
-                          </div>
-                        </div>
-
-                        {/* Action Button */}
-                        <div className="mt-4 pt-4 border-t border-gray-100">
-                          <button 
-                            onClick={() => handleRoomDetailClick(detail.id)}
-                            className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
-                          >
-                            Lihat Detail
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Facilities */}
@@ -419,7 +357,7 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
 
             <h2 className="text-lg font-semibold mb-3 text-gray-800">Fasilitas</h2>
             <div className="grid grid-cols-1 gap-3">
-              {product.facilities.map((facility, index) => (
+              {product.facilities.filter(f => f.header !== "Peraturan khusus tipe kamar" && f.header !== "Peraturan Kost" && f.header !== "Ketentuan pengajuan sewa").map((facility, index) => (
                 <div key={index} className="bg-white border rounded-lg p-3">
                   <h3 className="text-sm font-medium mb-2 text-gray-700">{facility.header}</h3>
                   {facility.items.length > 0 ? (
@@ -439,6 +377,108 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
             </div>
           </div>
         </div>
+
+        {/* Detail Kamar */}
+        {product.product_details && product.product_details.length > 0 && (
+          <div className="mt-6">
+            <div className="flex items-center gap-2">
+                <h2 className="text-lg font-semibold mb-3 text-gray-800">Daftar Kamar</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {product.product_details.map((detail, index) => (
+                <div key={index} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden flex flex-col">
+                  {/* Image Section */}
+                  {detail.images && detail.images.length > 0 && (
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://cms.medikost.id'}/storage/product-details/${detail.images[0]}`}
+                        alt={`${detail.room_name}`}
+                        className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      {/* Status Badge Overlay */}
+                      <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
+                        <div className={`inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs font-bold shadow-lg ${
+                          detail.status === 'habis' || detail.available_rooms === 0
+                            ? 'bg-red-500 text-white'
+                            : 'bg-emerald-500 text-white'
+                        }`}>
+                          {detail.status === 'habis' || detail.available_rooms === 0 ? 'HABIS' : 'TERSEDIA'}
+                        </div>
+                      </div>
+                      {/* Available Rooms Badge */}
+                      <div className="absolute top-2 left-2 sm:top-3 sm:left-3">
+                        <div className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium shadow-lg">
+                          <Users className="w-3 h-3 sm:w-4 sm:h-4" />
+                          {detail.available_rooms} Kamar
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="p-4 sm:p-6 flex flex-col flex-1">
+                    <div className="flex-1">
+                      {/* Room Name */}
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors duration-300">
+                        {detail.room_name}
+                      </h3>
+
+                      {/* Facilities */}
+                      {(() => {
+                        const allItems = detail.facilities
+                          .filter((facility: { header: string; items: string[] }) => facility.items.length > 0)
+                          .flatMap((facility: { header: string; items: string[] }) => facility.items);
+                        return allItems.length > 0 && (
+                          <div className="mt-2 mb-4">
+                            <div className="flex flex-wrap gap-2">
+                              {allItems.slice(0, 3).map((item: string, i: number) => (
+                                <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded-md text-xs text-gray-600">
+                                  {getIcon(item)}
+                                  <span>{item}</span>
+                                </div>
+                              ))}
+                              {allItems.length > 3 && (
+                                <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded-md text-xs text-gray-600">
+                                  <span>more+</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })()}
+
+                      {/* Price Section */}
+                      <div className="mb-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-xs text-gray-600 mb-1 font-medium">Harga per bulan</p>
+                            <p className="text-2xl font-bold text-emerald-600">
+                              Rp {parseInt(detail.price).toLocaleString('id-ID')}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Description */}
+                      <div className="text-sm text-gray-600 leading-relaxed">
+                        {truncateText(stripHtml(detail.description), 120)}
+                      </div>
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      <button 
+                        onClick={() => handleRoomDetailClick(detail.id)}
+                        className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+                      >
+                        Lihat Detail
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Floating WhatsApp Button */}
         <a
