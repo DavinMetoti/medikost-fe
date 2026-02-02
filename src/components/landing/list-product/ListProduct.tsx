@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getProducts, Product, ApiResponse, ProductPagination } from '../../../services/product/product.service';
+import { Skeleton } from '../../ui/skeleton';
 
 interface ListProductProps {
   initialProducts?: Product[];
@@ -50,7 +51,33 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" id="listings">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Daftar Kos Tersedia</h2>
-          <p className="text-gray-600">Memuat data kos...</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden">
+              <Skeleton className="h-56 w-full" />
+              <div className="p-5">
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/2 mb-3" />
+                <div className="flex gap-2 mb-3">
+                  <Skeleton className="h-6 w-16 rounded-full" />
+                  <Skeleton className="h-6 w-20 rounded-full" />
+                </div>
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Skeleton key={i} className="h-5 w-12 rounded-md" />
+                  ))}
+                </div>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <Skeleton className="h-4 w-20 mb-1" />
+                    <Skeleton className="h-8 w-24" />
+                  </div>
+                  <Skeleton className="h-10 w-20 rounded-lg" />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </main>
     );

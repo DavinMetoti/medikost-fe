@@ -2,8 +2,9 @@
 
 import { getProductById, ApiResponse, ProductDetail } from '../../../services/product/product.service';
 import { useState, useEffect, use } from 'react';
+import { useRouter } from 'next/navigation';
 import { Skeleton } from "@/components/ui/skeleton";
-import { Wifi, Car, Camera, Home, Users, Shield, Clock, FileText, Bike, Snowflake, Bed, Armchair, Table, Shirt, Fan } from 'lucide-react';
+import { Wifi, Car, Camera, Home, Users, Shield, Clock, FileText, Bike, Snowflake, Bed, Armchair, Table, Shirt, Fan, ChefHat, Utensils, Archive, Droplets, Wind, CheckCircle, Ban, Toilet } from 'lucide-react';
 
 interface DetailKostPageProps {
   params: Promise<{
@@ -15,6 +16,7 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [product, setProduct] = useState<ProductDetail | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const { id } = use(params);
   const productId = parseInt(id);
@@ -38,6 +40,22 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
 
     fetchProduct();
   }, [productId]);
+
+  const handleRoomDetailClick = async (detailId: number) => {
+    try {
+      // Fetch room details from API
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://cms.medikost.id/api'}products/${productId}/details/${detailId}`);
+      const data = await response.json();
+      
+      // Log the response
+      console.log('Room Detail Response:', data);
+      
+      // Navigate to detail-room page
+      router.push(`/detail-room/${detailId}`);
+    } catch (error) {
+      console.error('Failed to fetch room details:', error);
+    }
+  };
 
   if (loading) {
     return (
@@ -121,6 +139,12 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
               </div>
             </div>
           </div>
+
+          {/* Map Skeleton */}
+          <div className="mb-6">
+            <Skeleton className="h-6 w-24 mb-3" />
+            <Skeleton className="w-full h-64 rounded-lg" />
+          </div>
         </div>
       </div>
     );
@@ -166,6 +190,36 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
     if (lowerItem.includes('meja') || lowerItem.includes('table') || lowerItem.includes('desk')) return <Table className="w-4 h-4" />;
     // Chair and seating
     if (lowerItem.includes('kursi') || lowerItem.includes('chair') || lowerItem.includes('bangku') || lowerItem.includes('stool')) return <Armchair className="w-4 h-4" />;
+    // Dining room
+    if (lowerItem.includes('ruang makan') || lowerItem.includes('r. makan')) return <Utensils className="w-4 h-4" />;
+    // Kitchen
+    if (lowerItem.includes('dapur')) return <ChefHat className="w-4 h-4" />;
+    // Drying area
+    if (lowerItem.includes('jemuran') || lowerItem.includes('jemur') || lowerItem.includes('r. jemur')) return <Wind className="w-4 h-4" />;
+    // Refrigerator
+    if (lowerItem.includes('kulkas') || lowerItem.includes('refrigerator')) return <Archive className="w-4 h-4" />;
+    // Water dispenser
+    if (lowerItem.includes('dispenser')) return <Droplets className="w-4 h-4" />;
+    // Maximum occupants
+    if (lowerItem.includes('maks') || lowerItem.includes('maximum') || lowerItem.includes('2 orang')) return <Users className="w-4 h-4" />;
+    // Cleaning duties
+    if (lowerItem.includes('piket') || lowerItem.includes('wajib')) return <CheckCircle className="w-4 h-4" />;
+    // No pets
+    if (lowerItem.includes('hewan') || lowerItem.includes('dilarang bawa')) return <Ban className="w-4 h-4" />;
+    // Bathroom facilities
+    if (lowerItem.includes('kamar mandi dalam') || lowerItem.includes('bathroom')) return <Droplets className="w-4 h-4" />;
+    if (lowerItem.includes('shower')) return <Droplets className="w-4 h-4" />;
+    if (lowerItem.includes('kloset duduk') || lowerItem.includes('toilet')) return <Toilet className="w-4 h-4" />;
+    if (lowerItem.includes('wastafel') || lowerItem.includes('cermin') || lowerItem.includes('sink')) return <Droplets className="w-4 h-4" />;
+    if (lowerItem.includes('gantungan handuk') || lowerItem.includes('towel')) return <Shirt className="w-4 h-4" />;
+    if (lowerItem.includes('ember') || lowerItem.includes('gayung') || lowerItem.includes('bucket')) return <Archive className="w-4 h-4" />;
+    // Additional rules and facilities
+    if (lowerItem.includes('dilarang merokok') || lowerItem.includes('no smoking')) return <Ban className="w-4 h-4" />;
+    if (lowerItem.includes('menjaga kebersihan') || lowerItem.includes('kebersihan')) return <CheckCircle className="w-4 h-4" />;
+    if (lowerItem.includes('kerusakan fasilitas') || lowerItem.includes('tanggung jawab')) return <Shield className="w-4 h-4" />;
+    if (lowerItem.includes('lampu utama') || lowerItem.includes('lampu belajar') || lowerItem.includes('lampu')) return <Snowflake className="w-4 h-4" />;
+    if (lowerItem.includes('tempat sampah') || lowerItem.includes('sampah')) return <Archive className="w-4 h-4" />;
+    if (lowerItem.includes('rak sepatu') || lowerItem.includes('sepatu')) return <Shirt className="w-4 h-4" />;
     return <div className="w-4 h-4 bg-gray-300 rounded-full"></div>; // Default
   };
 
@@ -184,7 +238,7 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-1">{product.name}</h1>
-          <p className="text-sm text-gray-600">{product.address}</p>
+          <p className="text-sm text-gray-600 mb-2">{product.address}</p>
         </div>
 
         {/* Images */}
@@ -221,6 +275,37 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
               <h2 className="text-lg font-semibold mb-3 text-gray-800">Deskripsi</h2>
               <div className="text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: product.description }} />
             </div>
+
+            {/* Map Preview */}
+            {product.google_maps_link && (
+              <div className="mb-6">
+                <h2 className="text-lg font-semibold mb-3 text-gray-800">Lokasi</h2>
+                <a
+                  href={product.google_maps_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full h-64 rounded-lg overflow-hidden border hover:shadow-lg transition-shadow duration-300"
+                >
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center relative">
+                    <div className="text-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-map-pin mx-auto mb-2 text-gray-400">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                      </svg>
+                      <p className="text-gray-600 font-medium">Lihat di Google Maps</p>
+                      <p className="text-sm text-gray-500">Klik untuk membuka peta</p>
+                    </div>
+                    <div className="absolute top-2 right-2 bg-white rounded-full p-2 shadow-md">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-external-link text-gray-600">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15,3 21,3 21,9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            )}
 
             {/* Detail Kamar */}
             {product.product_details && product.product_details.length > 0 && (
@@ -267,13 +352,13 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                           </h3>
 
                           {/* Facilities */}
-                          {detail.facilities && detail.facilities.filter((facility: { header: string; items: string[] }) => facility.items.length > 0).slice(0, 3).length > 0 && (
+                          {detail.facilities && detail.facilities.filter((facility: { header: string; items: string[] }) => facility.items.length > 0).flatMap((facility: { header: string; items: string[] }) => facility.items).slice(0, 3).length > 0 && (
                             <div className="mt-2 mb-4">
                               <div className="flex flex-wrap gap-2">
                                 {detail.facilities
                                   .filter((facility: { header: string; items: string[] }) => facility.items.length > 0)
-                                  .slice(0, 3)
                                   .flatMap((facility: { header: string; items: string[] }) => facility.items)
+                                  .slice(0, 3)
                                   .map((item: string, i: number) => (
                                     <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded-md text-xs text-gray-600">
                                       {getIcon(item)}
@@ -304,7 +389,10 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
 
                         {/* Action Button */}
                         <div className="mt-4 pt-4 border-t border-gray-100">
-                          <button className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
+                          <button 
+                            onClick={() => handleRoomDetailClick(detail.id)}
+                            className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+                          >
                             Lihat Detail
                           </button>
                         </div>
@@ -318,6 +406,17 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
 
           {/* Facilities */}
           <div className="md:col-span-4">
+            <div className="bg-white border rounded-lg p-4 mb-4">
+              <h2 className="text-lg font-semibold mb-3 text-gray-800">Lokasi & Jarak</h2>
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-map-pin w-5 h-5 text-emerald-600">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span className="font-medium">{product.distance_to_kariadi} km dari RSUP Kariadi</span>
+              </div>
+            </div>
+
             <h2 className="text-lg font-semibold mb-3 text-gray-800">Fasilitas</h2>
             <div className="grid grid-cols-1 gap-3">
               {product.facilities.map((facility, index) => (
