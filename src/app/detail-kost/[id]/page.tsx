@@ -3,7 +3,7 @@
 import { getProductById, ApiResponse, ProductDetail } from '../../../services/product/product.service';
 import { useState, useEffect, use } from 'react';
 import { Skeleton } from "@/components/ui/skeleton";
-import { Wifi, Car, Camera, Home, Users, Shield, Clock, FileText, Bike } from 'lucide-react';
+import { Wifi, Car, Camera, Home, Users, Shield, Clock, FileText, Bike, Snowflake, Bed, Armchair, Table, Shirt, Fan } from 'lucide-react';
 
 interface DetailKostPageProps {
   params: Promise<{
@@ -154,6 +154,18 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
     if (lowerItem.includes('aman') || lowerItem.includes('keamanan')) return <Shield className="w-4 h-4" />;
     if (lowerItem.includes('waktu') || lowerItem.includes('jam') || lowerItem.includes('bulan')) return <Clock className="w-4 h-4" />;
     if (lowerItem.includes('ktp') || lowerItem.includes('sertakan')) return <FileText className="w-4 h-4" />;
+    // AC and cooling
+    if (lowerItem.includes('ac') || lowerItem.includes('air conditioner') || lowerItem.includes('pendingin')) return <Snowflake className="w-4 h-4" />;
+    // Fan
+    if (lowerItem.includes('kipas') || lowerItem.includes('fan') || lowerItem.includes('angin')) return <Fan className="w-4 h-4" />;
+    // Bed and mattress
+    if (lowerItem.includes('kasur') || lowerItem.includes('bed') || lowerItem.includes('mattress') || lowerItem.includes('tempat tidur')) return <Bed className="w-4 h-4" />;
+    // Wardrobe and closet
+    if (lowerItem.includes('lemari') || lowerItem.includes('wardrobe') || lowerItem.includes('closet') || lowerItem.includes('almari')) return <Shirt className="w-4 h-4" />;
+    // Table
+    if (lowerItem.includes('meja') || lowerItem.includes('table') || lowerItem.includes('desk')) return <Table className="w-4 h-4" />;
+    // Chair and seating
+    if (lowerItem.includes('kursi') || lowerItem.includes('chair') || lowerItem.includes('bangku') || lowerItem.includes('stool')) return <Armchair className="w-4 h-4" />;
     return <div className="w-4 h-4 bg-gray-300 rounded-full"></div>; // Default
   };
 
