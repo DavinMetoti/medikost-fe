@@ -50,8 +50,8 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
       // Log the response
       console.log('Room Detail Response:', data);
       
-      // Navigate to detail-room page
-      router.push(`/detail-room/${detailId}`);
+      // Navigate to detail-room page with kostId-roomId format
+      router.push(`/detail-room/${productId}-${detailId}`);
     } catch (error) {
       console.error('Failed to fetch room details:', error);
     }

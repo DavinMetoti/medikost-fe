@@ -71,17 +71,17 @@ export default function DetailRoomPage({ params }: DetailRoomPageProps) {
   const [selectedImage, setSelectedImage] = useState(0);
 
   const { id } = use(params);
-  const roomId = parseInt(id);
+  const [kostId, roomId] = id.split('-').map(Number);
 
   useEffect(() => {
-    if (isNaN(roomId)) {
+    if (isNaN(kostId) || isNaN(roomId)) {
       setLoading(false);
       return;
     }
 
     const fetchRoomDetail = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://cms.medikost.id/api/v1/'}products/${roomId}/details/${roomId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://cms.medikost.id/api/v1/'}products/${kostId}/details/${roomId}`);
         const data: RoomDetailResponse = await response.json();
         console.log('Room Detail Response:', data);
         setRoomData(data);
@@ -93,7 +93,7 @@ export default function DetailRoomPage({ params }: DetailRoomPageProps) {
     };
 
     fetchRoomDetail();
-  }, [roomId]);
+  }, [kostId, roomId]);
 
   const getIcon = (item: string) => {
     const lowerItem = item.toLowerCase();
