@@ -1,5 +1,4 @@
 import { apiFetch } from '../api.service';
-
 export interface Product {
   id: number;
   name: string;
@@ -10,6 +9,24 @@ export interface Product {
   whatsapp: string;
   google_maps_link: string;
   facilities_preview: string[];
+  status: string;
+  room_available: number;
+  total_rooms: number;
+}
+export interface ProductDetail {
+  id: number;
+  name: string;
+  address: string;
+  distance_to_kariadi: string;
+  whatsapp: string;
+  google_maps_link: string;
+  facilities: Array<{
+    header: string;
+    items: string[];
+  }>;
+  description: string;
+  images: string[];
+  product_details: any[]; // Assuming it's an array, adjust if needed
   status: string;
   room_available: number;
   total_rooms: number;
@@ -62,6 +79,6 @@ export const getProducts = async (page: number = 1): Promise<ApiResponse<Product
   return apiFetch(`products?page=${page}`);
 };
 
-export const getProductById = async (id: number): Promise<ApiResponse<Product>> => {
+export const getProductById = async (id: number): Promise<ApiResponse<ProductDetail>> => {
   return apiFetch(`products/${id}`);
 };

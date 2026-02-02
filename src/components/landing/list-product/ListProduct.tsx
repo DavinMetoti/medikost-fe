@@ -40,7 +40,7 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
 
   const getImageUrl = (thumbnail: string) => {
     if (thumbnail.startsWith('/storage/')) {
-      return `https://cms.medikost.id/${thumbnail}`;
+      return `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://cms.medikost.id'}${thumbnail}`;
     }
     return thumbnail;
   };
@@ -64,7 +64,7 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product) => (
-          <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+          <Link key={product.id} href={`/detail-kost/${product.id}`} className="block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
             <div className="relative h-56 overflow-hidden bg-gray-200">
               <img
                 src={getImageUrl(product.thumbnail)}
@@ -134,17 +134,19 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
                   <p className="text-2xl font-bold text-emerald-600">{formatPrice(product.starting_price)}</p>
                 </div>
                 <div className="flex gap-2">
-                  <Link
-                    href={`https://wa.me/${product.whatsapp}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.open(`https://wa.me/${product.whatsapp}`, '_blank');
+                    }}
                     className="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-4 py-2.5 rounded-lg font-medium transition-all shadow-md hover:shadow-lg"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle w-4 h-4">
                       <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
                     </svg>
                     <span>Hubungi</span>
-                  </Link>
+                  </button>
                 </div>
               </div>
               <div className="mt-3 pt-3 border-t text-xs text-gray-500">
@@ -156,7 +158,7 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </main>

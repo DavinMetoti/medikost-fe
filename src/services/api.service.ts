@@ -1,9 +1,10 @@
 // API configuration
 const isProduction = process.env.NODE_ENV === 'production';
-export const API_BASE_URL = 'https://cms.medikost.id/api/v1/';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://cms.medikost.id/api/v1/';
 
 export const apiFetch = async (endpoint: string, options?: RequestInit) => {
   const url = `${API_BASE_URL}${endpoint}`;
+  console.log('Fetching URL:', url);
 
   // For development builds, temporarily disable SSL verification
   // This is only for development and should not be used in production
