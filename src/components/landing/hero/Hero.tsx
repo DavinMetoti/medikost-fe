@@ -22,7 +22,7 @@ const Hero = ({ productCount: initialCount = 0, minPrice: initialMinPrice = null
       try {
         const response: ApiResponse<ProductPagination> = await getProducts();
         const products = response.data.data;
-        const count = products.length;
+        const count = products.reduce((sum, p) => sum + p.total_rooms, 0);
         const prices = products.map(p => p.starting_price).filter(p => p !== null) as number[];
         const minPrice = prices.length > 0 ? Math.min(...prices) : null;
         setProductStats({ count, minPrice });

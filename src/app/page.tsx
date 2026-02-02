@@ -11,7 +11,7 @@ export default async function Home() {
   try {
     const response: ApiResponse<ProductPagination> = await getProducts();
     products = response.data.data;
-    productCount = products.length;
+    productCount = products.reduce((sum, p) => sum + p.total_rooms, 0);
     const prices = products.map(p => p.starting_price).filter(p => p !== null) as number[];
     minPrice = prices.length > 0 ? Math.min(...prices) : null;
   } catch (error) {

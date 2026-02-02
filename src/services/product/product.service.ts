@@ -12,6 +12,7 @@ export interface Product {
   facilities_preview: string[];
   status: string;
   room_available: number;
+  total_rooms: number;
 }
 
 export interface ProductPagination {
