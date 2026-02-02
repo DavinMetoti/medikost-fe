@@ -277,38 +277,52 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
             </div>
 
             {/* Peraturan dan Ketentuan Kost */}
-            {product.facilities && product.facilities.find(f => f.header === "Peraturan Kost") && (
-              <div className="mt-6">
-                <h2 className="text-lg font-semibold mb-3 text-gray-800">Peraturan dan Ketentuan Kost</h2>
-                <div className="bg-white border rounded-lg p-4">
-                  <ul className="space-y-2">
-                    {product.facilities.find(f => f.header === "Peraturan Kost")?.items.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+            {(() => {
+              const facility = product.facilities?.find(f => f.header === "Peraturan Kost");
+              return facility && (
+                <div className="mt-6">
+                  <h2 className="text-lg font-semibold mb-3 text-gray-800">Peraturan Kost</h2>
+                  <div className="bg-white border rounded-lg p-4">
+                    {facility.items.length > 0 ? (
+                      <ul className="space-y-2">
+                        {facility.items.map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                            <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-gray-500">Tidak ada peraturan</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
             
             {/* Peraturan dan Ketentuan Kost */}
-            {product.facilities && product.facilities.find(f => f.header === "Ketentuan pengajuan sewa") && (
-              <div className="mt-6">
-                <h2 className="text-lg font-semibold mb-3 text-gray-800">Peraturan dan Ketentuan Kost</h2>
-                <div className="bg-white border rounded-lg p-4">
-                  <ul className="space-y-2">
-                    {product.facilities.find(f => f.header === "Ketentuan pengajuan sewa")?.items.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                        <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+            {(() => {
+              const facility = product.facilities?.find(f => f.header === "Ketentuan pengajuan sewa");
+              return facility && (
+                <div className="mt-6">
+                  <h2 className="text-lg font-semibold mb-3 text-gray-800">Ketentuan Pengajuan Sewa</h2>
+                  <div className="bg-white border rounded-lg p-4">
+                    {facility.items.length > 0 ? (
+                      <ul className="space-y-2">
+                        {facility.items.map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                            <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-gray-500">Tidak ada ketentuan</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
 
             {/* Map Preview */}
             {product.google_maps_link && (
