@@ -71,9 +71,9 @@ export const metadata: Metadata = {
     google: 'your-google-site-verification-code', // Ganti dengan kode verifikasi Google Search Console
   },
   icons: {
-    icon: '/images/medikost_logo.png',
-    shortcut: '/images/medikost_logo.png',
-    apple: '/images/medikost_logo.png',
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
   },
 };
 
