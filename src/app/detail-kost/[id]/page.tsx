@@ -249,6 +249,13 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                               {detail.status === 'habis' || detail.available_rooms === 0 ? 'HABIS' : 'TERSEDIA'}
                             </div>
                           </div>
+                          {/* Available Rooms Badge */}
+                          <div className="absolute top-3 left-3">
+                            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium shadow-lg">
+                              <Users className="w-4 h-4" />
+                              {detail.available_rooms} Kamar
+                            </div>
+                          </div>
                         </div>
                       )}
 
@@ -258,17 +265,9 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                           {detail.room_name}
                         </h3>
 
-                        {/* Room Info Badges */}
-                        <div className="flex flex-wrap items-center gap-2 mb-4">
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium">
-                            <Users className="w-4 h-4" />
-                            {detail.available_rooms} Kamar
-                          </span>
-                        </div>
-
                         {/* Facilities */}
                         {detail.facilities && detail.facilities.filter((facility: { header: string; items: string[] }) => facility.items.length > 0).slice(0, 3).length > 0 && (
-                          <div className="mt-2">
+                          <div className="mt-2 mb-4">
                             <div className="flex flex-wrap gap-2">
                               {detail.facilities
                                 .filter((facility: { header: string; items: string[] }) => facility.items.length > 0)
