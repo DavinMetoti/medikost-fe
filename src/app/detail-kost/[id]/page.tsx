@@ -44,7 +44,7 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
   const handleRoomDetailClick = async (detailId: number) => {
     try {
       // Fetch room details from API
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://cms.medikost.id/api'}products/${productId}/details/${detailId}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://cms.medikost.id/api/v1/'}products/${productId}/details/${detailId}`);
       const data = await response.json();
       
       // Log the response

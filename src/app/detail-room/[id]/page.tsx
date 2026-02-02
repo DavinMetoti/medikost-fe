@@ -81,7 +81,7 @@ export default function DetailRoomPage({ params }: DetailRoomPageProps) {
 
     const fetchRoomDetail = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://cms.medikost.id/api'}products/${roomId}/details/${roomId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://cms.medikost.id/api/v1/'}products/${roomId}/details/${roomId}`);
         const data: RoomDetailResponse = await response.json();
         console.log('Room Detail Response:', data);
         setRoomData(data);
