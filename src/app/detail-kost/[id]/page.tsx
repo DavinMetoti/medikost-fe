@@ -283,6 +283,25 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                           {truncateText(stripHtml(detail.description), 120)}
                         </div>
 
+                        {/* Facilities */}
+                        {detail.facilities && detail.facilities.filter((facility: { header: string; items: string[] }) => facility.items.length > 0).slice(0, 3).length > 0 && (
+                          <div className="mt-4">
+                            <h4 className="text-sm font-medium text-gray-700 mb-2">Fasilitas Kamar</h4>
+                            <div className="flex flex-wrap gap-2">
+                              {detail.facilities
+                                .filter((facility: { header: string; items: string[] }) => facility.items.length > 0)
+                                .slice(0, 3)
+                                .flatMap((facility: { header: string; items: string[] }) => facility.items)
+                                .map((item: string, i: number) => (
+                                  <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded-md text-xs text-gray-600">
+                                    {getIcon(item)}
+                                    <span>{item}</span>
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
+                        )}
+
                         {/* Action Button */}
                         <div className="mt-4 pt-4 border-t border-gray-100">
                           <button className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
