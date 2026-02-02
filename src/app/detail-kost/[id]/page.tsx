@@ -230,7 +230,7 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   {product.product_details.map((detail, index) => (
-                    <div key={index} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden">
+                    <div key={index} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 overflow-hidden flex flex-col">
                       {/* Image Section */}
                       {detail.images && detail.images.length > 0 && (
                         <div className="relative overflow-hidden">
@@ -259,45 +259,47 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                         </div>
                       )}
 
-                      <div className="p-4 sm:p-6">
-                        {/* Room Name */}
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors duration-300">
-                          {detail.room_name}
-                        </h3>
+                      <div className="p-4 sm:p-6 flex flex-col flex-1">
+                        <div className="flex-1">
+                          {/* Room Name */}
+                          <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors duration-300">
+                            {detail.room_name}
+                          </h3>
 
-                        {/* Facilities */}
-                        {detail.facilities && detail.facilities.filter((facility: { header: string; items: string[] }) => facility.items.length > 0).slice(0, 3).length > 0 && (
-                          <div className="mt-2 mb-4">
-                            <div className="flex flex-wrap gap-2">
-                              {detail.facilities
-                                .filter((facility: { header: string; items: string[] }) => facility.items.length > 0)
-                                .slice(0, 3)
-                                .flatMap((facility: { header: string; items: string[] }) => facility.items)
-                                .map((item: string, i: number) => (
-                                  <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded-md text-xs text-gray-600">
-                                    {getIcon(item)}
-                                    <span>{item}</span>
-                                  </div>
-                                ))}
+                          {/* Facilities */}
+                          {detail.facilities && detail.facilities.filter((facility: { header: string; items: string[] }) => facility.items.length > 0).slice(0, 3).length > 0 && (
+                            <div className="mt-2 mb-4">
+                              <div className="flex flex-wrap gap-2">
+                                {detail.facilities
+                                  .filter((facility: { header: string; items: string[] }) => facility.items.length > 0)
+                                  .slice(0, 3)
+                                  .flatMap((facility: { header: string; items: string[] }) => facility.items)
+                                  .map((item: string, i: number) => (
+                                    <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-gray-50 rounded-md text-xs text-gray-600">
+                                      {getIcon(item)}
+                                      <span>{item}</span>
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Price Section */}
+                          <div className="mb-4">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-xs text-gray-600 mb-1 font-medium">Harga per bulan</p>
+                                <p className="text-2xl font-bold text-emerald-600">
+                                  Rp {parseInt(detail.price).toLocaleString('id-ID')}
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        )}
 
-                        {/* Price Section */}
-                        <div className="mb-4">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <p className="text-xs text-gray-600 mb-1 font-medium">Harga per bulan</p>
-                              <p className="text-2xl font-bold text-emerald-600">
-                                Rp {parseInt(detail.price).toLocaleString('id-ID')}
-                              </p>
-                            </div>
+                          {/* Description */}
+                          <div className="text-sm text-gray-600 leading-relaxed">
+                            {truncateText(stripHtml(detail.description), 120)}
                           </div>
-                        </div>
-
-                        {/* Description */}
-                        <div className="text-sm text-gray-600 leading-relaxed">
-                          {truncateText(stripHtml(detail.description), 120)}
                         </div>
 
                         {/* Action Button */}
