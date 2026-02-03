@@ -11,8 +11,10 @@ export default async function Home() {
   try {
     const response: ApiResponse<ProductPagination> = await getProducts();
     products = response.data.data;
-    productCount = products.reduce((sum, p) => sum + p.total_rooms, 0);
-    const prices = products.map(p => p.starting_price).filter(p => p !== null) as number[];
+    // Count only products with status "kosong" (available)
+    const availableProducts = products.filter(p => p.status === 'kosong');
+    productCount = availableProducts.reduce((sum, p) => sum + p.total_rooms, 0);
+    const prices = availableProducts.map(p => p.starting_price).filter(p => p !== null) as number[];
     minPrice = prices.length > 0 ? Math.min(...prices) : null;
   } catch (error) {
     console.error('Failed to fetch products on server:', error);
