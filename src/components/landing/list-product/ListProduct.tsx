@@ -108,11 +108,11 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
                 <div className="flex-1">
                   {/* Status Badge */}
                   <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold mb-2 ${
-                      product.status === 'habis' || product.room_available === 0
+                      product.status === 'isi' || product.room_available === 0
                           ? 'bg-red-500 text-white'
                           : 'bg-green-500 text-white'
                       }`}>
-                      {product.status === 'habis' || product.room_available === 0 ? 'HABIS' : 'TERSEDIA'}
+                      {product.status === 'isi' || product.room_available === 0 ? 'HABIS' : 'TERSEDIA'}
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-1">{product.name}</h3>
                   <div className="flex items-center text-sm text-gray-600 mb-2">

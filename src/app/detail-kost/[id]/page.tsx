@@ -391,11 +391,11 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
                       {/* Status Badge Overlay */}
                       <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
                         <div className={`inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs font-bold shadow-lg ${
-                          detail.status === 'habis' || detail.available_rooms === 0
+                          detail.status === 'isi' || detail.available_rooms === 0
                             ? 'bg-red-500 text-white'
                             : 'bg-emerald-500 text-white'
                         }`}>
-                          {detail.status === 'habis' || detail.available_rooms === 0 ? 'HABIS' : 'TERSEDIA'}
+                          {detail.status === 'isi' || detail.available_rooms === 0 ? 'HABIS' : 'TERSEDIA'}
                         </div>
                       </div>
                       {/* Available Rooms Badge */}
