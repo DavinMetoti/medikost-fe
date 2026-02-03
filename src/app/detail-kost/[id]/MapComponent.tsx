@@ -88,6 +88,10 @@ const RoutingComponent: React.FC<{ product: ProductDetail }> = ({ product }) => 
 };
 
 export default function MapComponent({ product }: MapComponentProps) {
+  // Since this component is dynamically imported with ssr: false,
+  // it only renders on the client side, so we can safely render the map
+  const mounted = true;
+
   // Check if coordinates are available
   const hasCoordinates = product.latitude && product.longitude && 
     !isNaN(parseFloat(product.latitude)) && !isNaN(parseFloat(product.longitude));
@@ -102,6 +106,17 @@ export default function MapComponent({ product }: MapComponentProps) {
           </svg>
           <p className="text-gray-600 font-medium">Koordinat lokasi tidak tersedia</p>
           <p className="text-sm text-gray-500">Peta tidak dapat ditampilkan</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!mounted) {
+    return (
+      <div className="w-full h-64 rounded-lg overflow-hidden border bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-2"></div>
+          <p className="text-gray-600 font-medium">Memuat peta...</p>
         </div>
       </div>
     );
