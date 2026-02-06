@@ -35,7 +35,7 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
   }, [initialProducts]);
 
   const formatPrice = (price: number | null) => {
-    if (!price) return 'N/A';
+    if (!price) return 'Harga belum tersedia';
     return `Rp ${price.toLocaleString('id-ID')}`;
   };
 
@@ -91,7 +91,7 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product) => (
-          <Link key={product.id} href={`/detail-kost/${product.id}`} className="block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+          <Link key={product.id} href={`/detail-kost/${product.id}`} className="block bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 min-h-[500px] flex flex-col">
             <div className="relative h-56 overflow-hidden bg-gray-200">
               <img
                 src={getImageUrl(product.thumbnail)}
@@ -103,7 +103,7 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
                 {product.distance_to_kariadi} km
               </div>
             </div>
-            <div className="p-5">
+            <div className="p-5 flex-grow">
               <div className="flex justify-between items-start mb-3">
                 <div className="flex-1">
                   {/* Status Badge */}
