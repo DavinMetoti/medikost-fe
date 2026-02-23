@@ -127,8 +127,8 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
               <div className="flex items-center gap-3 mb-3 text-sm">
                 {/* Placeholder for gender/type - not in API */}
                 <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full font-medium ${
-                  product.category === 'Putra' ? 'bg-blue-50 text-blue-700' :
-                  product.category === 'Putri' ? 'bg-pink-50 text-pink-700' :
+                  product.category.toLowerCase() === 'putra' ? 'bg-blue-50 text-blue-700' :
+                  product.category.toLowerCase() === 'putri' ? 'bg-pink-50 text-pink-700' :
                   'bg-gray-50 text-gray-700'
                 }`}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users w-3.5 h-3.5">
@@ -137,7 +137,7 @@ const ListProduct = ({ initialProducts = [] }: ListProductProps) => {
                     <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
                     <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                   </svg>
-                  {product.category === 'Putra' ? 'Putra' : product.category === 'Putri' ? 'Putri' : 'Campur'}
+                  {product.category.toLowerCase() === 'putra' ? 'Putra' : product.category.toLowerCase() === 'putri' ? 'Putri' : 'Campur'}
                 </span>
                 <span className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-700 rounded-full font-medium">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-home w-3.5 h-3.5">
