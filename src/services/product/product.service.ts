@@ -12,7 +12,7 @@ export interface Product {
   status: string;
   room_available: number;
   total_rooms: number;
-  category: 'putra' | 'putri' | 'campur';
+  category: 'Putra' | 'Putri' | 'Campur';
 }
 export interface ProductDetail {
   id: number;
@@ -33,6 +33,7 @@ export interface ProductDetail {
   status: string;
   room_available: number;
   total_rooms: number;
+  category: 'Putra' | 'Putri' | 'Campur';
 }
 
 export interface ProductPagination {
