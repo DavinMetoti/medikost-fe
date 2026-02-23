@@ -34,9 +34,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Kontak</h3>
             <ul className="space-y-2 text-sm text-gray-300">
-              <li>Email: info@medikost.id</li>
-              <li>Telepon: +62 123 456 7890</li>
-              <li>Alamat: Semarang, Indonesia</li>
+              <li>Email: mediko.id@gmail.com</li>
+              <li>Telepon: +682136550406</li>
+              <li>Alamat: Sekitar Kariadi, Semarang, Indonesia</li>
             </ul>
           </div>
         </div>
