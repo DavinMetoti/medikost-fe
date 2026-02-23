@@ -12,6 +12,7 @@ export interface Product {
   status: string;
   room_available: number;
   total_rooms: number;
+  category: 'putra' | 'putri' | 'campur';
 }
 export interface ProductDetail {
   id: number;
