@@ -5,6 +5,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Wifi, Car, Camera, Home, Users, Shield, Clock, FileText, Bike, Snowflake, Bed, Armchair, Table, Shirt, Fan, ChefHat, Utensils, Archive, Droplets, Wind, CheckCircle, Ban, Toilet } from 'lucide-react';
 import Link from 'next/link';
 
+// Function to decode HTML entities
+const decodeHtmlEntities = (text: string) => {
+  if (typeof window === 'undefined') return text; // SSR safe
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
 interface DetailRoomPageProps {
   params: Promise<{
     id: string;
@@ -247,7 +255,7 @@ export default function DetailRoomPage({ params }: DetailRoomPageProps) {
             {/* Description */}
             <div className="">
               <h2 className="text-xl font-semibold mb-4 text-gray-800">Deskripsi Kamar</h2>
-              <div className="text-sm text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: detail.description }} />
+              <div className="text-sm text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(detail.description) }} />
             </div>
 
             {/* Room Facilities */}

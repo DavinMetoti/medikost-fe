@@ -10,6 +10,14 @@ import { Wifi, Car, Camera, Home, Users, Shield, Clock, FileText, Bike, Snowflak
 // Dynamic import for MapComponent to avoid SSR issues
 const MapComponent = dynamic(() => import('./MapComponent'), { ssr: false });
 
+// Function to decode HTML entities
+const decodeHtmlEntities = (text: string) => {
+  if (typeof window === 'undefined') return text; // SSR safe
+  const textarea = document.createElement('textarea');
+  textarea.innerHTML = text;
+  return textarea.value;
+};
+
 interface DetailKostPageProps {
   params: Promise<{
     id: string;
@@ -277,7 +285,7 @@ export default function DetailKostPage({ params }: DetailKostPageProps) {
           <div className="md:col-span-8">
             <div className="">
               <h2 className="text-lg font-semibold mb-3 text-gray-800">Deskripsi</h2>
-              <div className="text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: product.description }} />
+              <div className="text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(product.description) }} />
             </div>
 
             {/* Peraturan dan Ketentuan Kost */}
